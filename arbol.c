@@ -61,7 +61,7 @@ Nodo* buildTree( Nodo l[], int n ) {
             
         }
         // Comprobación del arbol
-        printf("(%c -> %d,%c -> %d): %d. \n", aux -> left -> caracter, aux -> left -> frecuencia, aux -> right -> caracter, aux -> left -> frecuencia, aux -> frecuencia );
+        // printf("(%c -> %d,%c -> %d): %d. \n", aux -> left -> caracter, aux -> left -> frecuencia, aux -> right -> caracter, aux -> left -> frecuencia, aux -> frecuencia );
     }
     return aux;
 }
@@ -71,6 +71,7 @@ void getByteCode( Nodo *tree, char letra ) {
         return;
     
     if( tree -> left != NULL && tree -> right != NULL ){
+        printf("Hola");
         // Caso Base.
         if( tree -> left -> caracter == letra ) {
             printf("0");
@@ -81,13 +82,48 @@ void getByteCode( Nodo *tree, char letra ) {
             return;
         }
         // Recursión
-        if( tree -> right -> caracter != letra && tree -> left -> caracter == ' ' ){
+        if( tree -> left -> caracter == ' ' ){
             printf("0");   
             getByteCode( tree -> left, letra ); 
         }
-        if( tree -> left -> caracter != letra && tree -> right -> caracter == ' ' ){
+        else {
             printf("1");
             getByteCode( tree -> right, letra );
         }
+    }
+}
+void getByteCode2(Nodo *tree, char letra) {
+    if (tree == NULL) {
+        printf("Nodo nulo encontrado.\n");
+        return;
+    }
+
+    printf("Visitando nodo con caracter: %c\n", tree->caracter);
+
+    if (tree->caracter == letra) {
+        printf("Caracter encontrado: %c\n", letra);
+        return;
+    }
+
+    if (tree->left != NULL) {
+        if (tree->left->caracter == letra) {
+            printf("Caracter encontrado en hijo izquierdo: %c\n", letra);
+            printf("0");
+            return;
+        }
+        getByteCode(tree->left, letra);
+    } else {
+        printf("Hijo izquierdo nulo.\n");
+    }
+
+    if (tree->right != NULL) {
+        if (tree->right->caracter == letra) {
+            printf("Caracter encontrado en hijo derecho: %c\n", letra);
+            printf("1");
+            return;
+        }
+        getByteCode(tree->right, letra);
+    } else {
+        printf("Hijo derecho nulo.\n");
     }
 }
