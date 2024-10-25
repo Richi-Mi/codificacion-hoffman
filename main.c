@@ -14,6 +14,6 @@ int main() {
     }
 
     Nodo *tree = buildTree( nodos, 6 );
-    getByteCode( tree, 'a' );
+    getByteCode2( tree, 'a' );
     return 0;
 }
