@@ -92,38 +92,3 @@ void getByteCode( Nodo *tree, char letra ) {
         }
     }
 }
-void getByteCode2(Nodo *tree, char letra) {
-    if (tree == NULL) {
-        printf("Nodo nulo encontrado.\n");
-        return;
-    }
-
-    printf("Visitando nodo con caracter: %c\n", tree->caracter);
-
-    if (tree->caracter == letra) {
-        printf("Caracter encontrado: %c\n", letra);
-        return;
-    }
-
-    if (tree->left != NULL) {
-        if (tree->left->caracter == letra) {
-            printf("Caracter encontrado en hijo izquierdo: %c\n", letra);
-            printf("0");
-            return;
-        }
-        getByteCode(tree->left, letra);
-    } else {
-        printf("Hijo izquierdo nulo.\n");
-    }
-
-    if (tree->right != NULL) {
-        if (tree->right->caracter == letra) {
-            printf("Caracter encontrado en hijo derecho: %c\n", letra);
-            printf("1");
-            return;
-        }
-        getByteCode(tree->right, letra);
-    } else {
-        printf("Hijo derecho nulo.\n");
-    }
-}
