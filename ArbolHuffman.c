@@ -37,7 +37,7 @@ arbolHuffman CrearArbol(elemento *A, int n){//Recibe el arreglo de elementos y r
 		arbolIzq = Extraer(minimos);
 		arbolDer = Extraer(minimos);
 		
-		frecuencias = arbolIzq->e.frecuencia - arbolDer->e.frecuencia;
+		frecuencias = arbolIzq->e.frecuencia + arbolDer->e.frecuencia;
 		e.frecuencia = frecuencias;
 		//e.caracter = NULL;
 		init(&nuevo, e);
