@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct Nodo {
-
-    int frecuencia;
-    char caracter;
-
-    struct Nodo *left; // Izquierdo 0
-    struct Nodo *right; // Derecho 1
-
-} Nodo;
+#include "arbol.h"
 
 Nodo* init( int frecuencia, char caracter ) {
 
@@ -61,7 +50,7 @@ Nodo* buildTree( Nodo l[], int n ) {
             
         }
         // Comprobación del arbol
-        // printf("(%c -> %d,%c -> %d): %d. \n", aux -> left -> caracter, aux -> left -> frecuencia, aux -> right -> caracter, aux -> left -> frecuencia, aux -> frecuencia );
+        printf("(%c -> %d,%c -> %d): %d. \n", aux -> left -> caracter, aux -> left -> frecuencia, aux -> right -> caracter, aux -> right -> frecuencia, aux -> frecuencia );
     }
     return aux;
 }
@@ -69,9 +58,8 @@ void getByteCode( Nodo *tree, char letra ) {
     // Verificamos que el arbol no sea nulo.
     if( tree == NULL )
         return;
-    
+    // Significa que no es una hoja del arbol.
     if( tree -> left != NULL && tree -> right != NULL ){
-        printf("Hola");
         // Caso Base.
         if( tree -> left -> caracter == letra ) {
             printf("0");
