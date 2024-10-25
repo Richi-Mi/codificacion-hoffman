@@ -12,11 +12,12 @@ int tam;
 void Inicializar(heap *A, int n){
 	tam = 0;
 	
-	*A = malloc(n * sizeof(arbolHuffman));
+	*A = malloc((n+1) * sizeof(arbolHuffman));
 	if (*A == NULL) {
         printf("\nError al intentar reservar memoria para %d elementos\n", n);      
         exit(1);
     }
+	//A[tam] = 0;
 }
 
 void Intercambio(heap A, int i){
@@ -34,6 +35,7 @@ void Intercambio(heap A, int i){
 void Insertar(heap A, arbolHuffman valor){
 	int i = tam;
 	A[tam++] = valor; // colocamos dentro del heap en la siguiente posición del arreglo
+	//printf("Insertar -valor del elemento: %d\n", A[i]->e.frecuencia);
 	Intercambio(A, i);
 }
 
@@ -46,7 +48,7 @@ arbolHuffman Extraer(heap A){ // Se saca el elemento de la raizel arbol
 		tam--;
 		return A[0];
 	}
-	printf("Estoy en extraer\n");
+	//printf("Estoy en extraer\n");
 	arbolHuffman elementoRaiz = A[0]; //Obtenemos el número que se encuentra en la raiz (este deberia ser el menor dentro del arbol)
 	A[0] = A[tam-1]; //sustituimos la raiz con la ultima hoja que agregamos
 	tam--;

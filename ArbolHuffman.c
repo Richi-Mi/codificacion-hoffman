@@ -13,7 +13,11 @@ VERSIÓN: 1.0
 #include "Heap.h"
 
 void init (arbolHuffman *A, elemento E){
-	*A = malloc(sizeof(arbolHuffman));
+	*A = malloc(sizeof(nodo));
+	if (*A == NULL) {
+        printf("\nError al intentar reservar memoria\n");      
+        exit(1);
+    }
 	(*A)->e = E;
 	(*A)->izq = NULL;
 	(*A)->der = NULL;
@@ -31,15 +35,23 @@ arbolHuffman CrearArbol(elemento *A, int n){//Recibe el arreglo de elementos y r
 		init(&arbol, A[i]);
 		Insertar(minimos, arbol);
 	}
-	arbolHuffman arbolIzq, arbolDer, nuevo;
+	/*
+	for(i = 0; i < n-1; i++){
+		arbolHuffman arbol = Extraer(minimos);
+		printf("\n%d ", arbol->e.frecuencia);
+	}
+	*/
 	while(size(minimos)>1){
-		printf("%d ", size(minimos));
+		arbolHuffman arbolIzq, arbolDer, nuevo;
 		arbolIzq = Extraer(minimos);
 		arbolDer = Extraer(minimos);
 		
 		frecuencias = arbolIzq->e.frecuencia + arbolDer->e.frecuencia;
+		
+		//printf("\n%d ", frecuencias);
 		e.frecuencia = frecuencias;
 		//e.caracter = NULL;
+		
 		init(&nuevo, e);
 		nuevo->der = arbolDer;
 		nuevo->izq = arbolIzq;
