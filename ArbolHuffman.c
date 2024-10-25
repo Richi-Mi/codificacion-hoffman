@@ -13,7 +13,7 @@ VERSIÓN: 1.0
 #include "Heap.h"
 
 void init (arbolHuffman *A, elemento E){
-	*A = malloc(sizeof(elemento));
+	*A = malloc(sizeof(arbolHuffman));
 	(*A)->e = E;
 	(*A)->izq = NULL;
 	(*A)->der = NULL;
