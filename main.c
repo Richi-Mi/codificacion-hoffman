@@ -15,6 +15,5 @@ int main() {
 
     Nodo *tree = buildTree( nodos, 6 );
     getByteCode( tree, 'a' );
-    printf("\n");
     return 0;
 }

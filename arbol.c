@@ -61,7 +61,7 @@ Nodo* buildTree( Nodo l[], int n ) {
             
         }
         // Comprobación del arbol
-        printf("(%c -> %d,%c -> %d): %d. \n", aux -> left -> caracter, aux -> left -> frecuencia, aux -> right -> caracter, aux -> left -> frecuencia, aux -> frecuencia );
+        // printf("(%c -> %d,%c -> %d): %d. \n", aux -> left -> caracter, aux -> left -> frecuencia, aux -> right -> caracter, aux -> left -> frecuencia, aux -> frecuencia );
     }
     return aux;
 }
@@ -71,6 +71,7 @@ void getByteCode( Nodo *tree, char letra ) {
         return;
     
     if( tree -> left != NULL && tree -> right != NULL ){
+        printf("Hola");
         // Caso Base.
         if( tree -> left -> caracter == letra ) {
             printf("0");
