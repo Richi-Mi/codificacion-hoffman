@@ -31,8 +31,10 @@ typedef nodo* posicion;
 
 typedef posicion arbolHuffman;
 
-arbolHuffman Inicializar (elemento E);
+void init (arbolHuffman *A,elemento E);
 
-void CrearArbol (arbolHuffman *A);
+arbolHuffman CrearArbol (elemento *A, int n);
 
-void AñadirHijo(arbolHuffman *A, izq, elemento E);
+void AddHijoIzquierdo(arbolHuffman *A, elemento E);
+
+void AddHijoDerecho(arbolHuffman *A, elemento E);

@@ -1,5 +1,7 @@
-#include <stdlib.h>
-#include "arbol.c"
+#include<stdio.h>
+#include<stdlib.h>
+#include "ArbolHuffman.h"
+#include "Heap.h"
 
 int main() {
 

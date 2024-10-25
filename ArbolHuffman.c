@@ -9,24 +9,53 @@ VERSIÓN: 1.0
 
 #include<stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include"TADABB.h"
+#include "ArbolHuffman.h"
+#include "Heap.h"
 
-arbolHuffman Inicializar (elemento E){
-	arbolHuffman A = malloc(sizeof(elemento));
-	(A->e)->frecuencia = E->frecuencia;
-	(A->e)->caracter = E->caracter;
+void init (arbolHuffman *A, elemento E){
+	*A = malloc(sizeof(elemento));
+	(*A)->e = E;
+	(*A)->izq = NULL;
+	(*A)->der = NULL;
 }
 
-//Recibe los elementos ya ordenados
-arbolHuffman CrearArbol (elemento * A, int n){
-	posicion auxiliar, nuevoN, actual;
-	arbolHuffman arbolesIndividuales[];
-	for(int i = 0; i < n; i++){
-		actual.AñadirHijo(arbolesIndividuales[i], )
+//El código queda de la siguiente manera utilizando ayuda de un heap para no estar ordenando en cada momento
+arbolHuffman CrearArbol(elemento *A, int n){//Recibe el arreglo de elementos y retorna la raiz del arbol
+	int i, frecuencias;
+	elemento e;
+	heap minimos;
+	Inicializar(&minimos, n);
+	//Metemos los elementos, no es necesario que esten ordenador, ya que el heap los ordena por si mismo
+	for(i = 0; i < n; i++){
+		arbolHuffman arbol;
+		init(&arbol, A[i]);
+		Insertar(minimos, arbol);
 	}
-	
-	
+	arbolHuffman arbolIzq, arbolDer, nuevo;
+	while(size(minimos)>1){
+		printf("%d ", size(minimos));
+		arbolIzq = Extraer(minimos);
+		arbolDer = Extraer(minimos);
+		
+		frecuencias = arbolIzq->e.frecuencia - arbolDer->e.frecuencia;
+		e.frecuencia = frecuencias;
+		//e.caracter = NULL;
+		init(&nuevo, e);
+		nuevo->der = arbolDer;
+		nuevo->izq = arbolIzq;
+		
+		Insertar(minimos, nuevo);
+	}
+	return Extraer(minimos);
 }
 
-void AñadirHijo(arbolHuffman *A, izq, elemento E);
+/*
+
+void AddHijoIzquierdo(arbolHuffman *A, elemento E){
+	init(&((*A)->izq), E);
+}
+
+void AddHijoDerecho(arbolHuffman *A, elemento E){
+	init(&((*A)->der), E);
+}
+*/
