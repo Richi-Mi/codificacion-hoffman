@@ -1,22 +1,40 @@
-#include <stdio.h>
-#include <stdlib.h>
+
+//DEFINICIÓN DE CONSTANTES
+#define TRUE 1
+#define FALSE 0
+
+//DEFINICIÓN DE ESTRUCTURAS
+typedef unsigned char booleano;
+typedef unsigned char byte;
+
+typedef struct elemento
+{
+	int frecuencia;
+	byte caracter;
+	void *apellido;
+} elemento;
 
 typedef struct Nodo {
 
-    int frecuencia;
-    char caracter;
+	elemento e;
 
     struct Nodo *left; // Izquierdo 0
     struct Nodo *right; // Derecho 1
 
 } Nodo;
 
-Nodo* init( int frecuencia, char caracter );
+typedef Nodo* posicion;
 
-void addToLeft( Nodo *p, int frecuencia, char caracter );
+typedef posicion arbolHuffman;
 
-void addToRight( Nodo *p, int frecuencia, char caracter );
+//DEFINICIÓN DE FUNCIONES
 
-Nodo* buildTree( Nodo l[], int n );
+arbolHuffman init( elemento e );
 
-void getByteCode( Nodo *tree, char letra );
+void addToLeft( arbolHuffman p, elemento E );
+
+void addToRight( arbolHuffman p, elemento E );
+
+arbolHuffman buildTree( Nodo l[], int n );
+
+void getByteCode( arbolHuffman tree, byte letra );
