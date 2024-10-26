@@ -18,6 +18,7 @@ typedef struct elemento
 {
 	int frecuencia;
 	byte caracter;
+	void *apellido;
 } elemento;
 
 typedef struct nodo
