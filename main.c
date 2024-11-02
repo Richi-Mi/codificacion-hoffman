@@ -1,54 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "arbol.c"
-
-void addTreeLef( NodoArbol **p, int f, char c ){
-
-    NodoArbol *new = (NodoArbol *) malloc(sizeof(NodoArbol));
-
-    new -> frecuencia = f;
-    new -> caracter = c;
-    new -> sig = NULL;
-
-    if (*p == NULL){
-        *p = new;
-    }
-
-    else{
-        
-        // aux -> Accede al valor al que apunta 'p' (dirección de estructura)
-        NodoArbol *aux = *p;
-
-        // Pregunta sobre el nodo siguiente al que esta apunta
-        while (aux -> sig != NULL){
-            // aux apunta al siguiente NODO
-            aux = aux->sig;
-        }
-        // Lo enlazamos como siguiente de 'aux'
-        aux->sig = new;
-
-    }
-}
+#include "lista.h"
 
 int main() {
+    int  n = 6, i;
+    int frecuencias[] = { 5, 9, 12, 13, 16, 45 };
+    char caracteres[] = { 'f', 'e', 'c', 'b', 'd', 'a'};
 
-    int frecuencias[6] = { 1, 1, 1, 3, 3, 9 };
-    char caracteres[6] = "glza!o";
-    int i;
-    NodoArbol *p = NULL;
+    NodoLista *p = NULL;
+    // Llenar el arreglo,
+    for( i = 0; i < n; i++ )
+        addElementToEnd( &p, frecuencias[i], caracteres[i] );
+    
+    NodoLista *aux = p;
 
-    for( i = 0; i < 6; i++ ) {
-        addTreeLef( &p, frecuencias[i], caracteres[i] );
+    printf("Lista - pre.\n");
+    while( aux != NULL ) {
+        printf("| %c - %d |\n", aux -> subTree -> caracter, aux -> subTree -> frecuencia );
+        aux = aux -> next;
     }
+    
+    NodoArbol *a = buildTree( &p );
 
-    // Construccion del arbol
-    buildTree( p );
+    Pila *myStack = malloc( sizeof(Pila) );
+    myStack -> tope = 0;
+    myStack -> inicio = NULL;
 
-    mostrar( p );
+    printf("%d\n",  a -> frecuencia );
 
-    // NodoArbol *tree = buildTree( nodos, 6 );
-    //getByteCode( p, '0' );
-    printf("\n");
-    return 0;
+    int b = getByteCode( a, 'f', myStack );
+
+    showElements( myStack );
+    
 }
