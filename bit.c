@@ -1,38 +1,43 @@
 #include <stdio.h>
-/*
-Esta macro genera un número en el cual solo el bit en la posición bpos
-está en 1. Por ejemplo, si bpos = 3, el resultado sería 00001000, que en
-decimal es 8. Esto se logra con el desplazamiento de bits a la izquierda: 1 << bpos.
+/**
+ * @author Rodriguez Mendoza Cristofer. 
+ * Esta macro genera un nï¿½mero en el cual solo el bit en la posiciï¿½n bpos
+ * estï¿½ en 1. Por ejemplo, si bpos = 3, el resultado serï¿½a 00001000, que en
+ * decimal es 8. Esto se logra con el desplazamiento de bits a la izquierda: 1 << bpos.
 */
-#define PESOBIT(bpos) 1<<bpos
+#define PESOBIT( bpos ) 1<<bpos
 
-/*
-Esta macro verifica el valor del bit en la posición bpos de la variable var. Usa una
-conversión a puntero unsigned* para trabajar a nivel de bits sin problemas de tipos.
-Luego, hace una operación AND con el resultado de PESOBIT(bpos) para ver si el bit en
-esa posición es 1 o 0, y regresa 1 o 0 según corresponda.
+/**
+ * @author Rodriguez Mendoza Cristofer. 
+ * Esta macro verifica el valor del bit en la posiciï¿½n bpos de la variable var. Usa una
+ * conversiï¿½n a puntero unsigned* para trabajar a nivel de bits sin problemas de tipos.
+ * Luego, hace una operaciï¿½n AND con el resultado de PESOBIT(bpos) para ver si el bit en
+ * esa posiciï¿½n es 1 o 0, y regresa 1 o 0 segï¿½n corresponda.
 */
-#define CONSULTARBIT(var,bpos) (*(unsigned*)&var & PESOBIT(bpos))?1:0
+#define CONSULTARBIT( var, bpos ) (*(unsigned*)&var & PESOBIT(bpos))?1:0
 
-/*
-Esta macro pone el bit en la posición bpos de var en 1. Se realiza una operación OR
-entre la variable y el valor devuelto por PESOBIT(bpos). La operación OR garantiza
-que solo el bit en la posición bpos se establezca en 1 sin modificar otros bits.
+/**
+ * @author Rodriguez Mendoza Cristofer. 
+ * Esta macro pone el bit en la posiciï¿½n bpos de var en 1. Se realiza una operaciï¿½n OR
+ * entre la variable y el valor devuelto por PESOBIT(bpos). La operaciï¿½n OR garantiza
+ * que solo el bit en la posiciï¿½n bpos se establezca en 1 sin modificar otros bits.
 */
-#define PONE_1(var,bpos) *(unsigned*)&var |= PESOBIT(bpos)
+#define PONE_1( var, bpos ) *(unsigned*)&var |= PESOBIT(bpos)
 
-/*
-Similar a PONE_1, pero aquí se pone el bit en la posición bpos en 0. Se usa una máscara
-negada (~) para asegurarse de que solo el bit específico se apague, mientras los demás
-permanecen sin cambios.
+/**
+ * @author Rodriguez Mendoza Cristofer. 
+ * Similar a PONE_1, pero aquï¿½ se pone el bit en la posiciï¿½n bpos en 0. Se usa una mï¿½scara
+ * negada (~) para asegurarse de que solo el bit especï¿½fico se apague, mientras los demï¿½s
+ * permanecen sin cambios.
 */
 #define PONE_0(var,bpos) *(unsigned*)&var &= ~(PESOBIT(bpos))
 
-/*
-Esta macro niega el bit en la posición bpos de var. Usa la operación XOR, que cambia el
-bit de 1 a 0 o de 0 a 1.
+/**
+ * @author Rodriguez Mendoza Cristofer. 
+ * Esta macro niega el bit en la posiciï¿½n bpos de var. Usa la operaciï¿½n XOR, que cambia el
+ * bit de 1 a 0 o de 0 a 1.
 */
-#define CAMBIA(var,bpos) *(unsigned*)&var ^= PESOBIT(bpos)
+#define CAMBIA( var, bpos ) *(unsigned*)&var ^= PESOBIT(bpos)
 
 int main(void)
 {
@@ -45,7 +50,7 @@ int main(void)
 	PONE_1(arreglo[a/8],a%8);
 
 	//Determinar la longitud de los bits a operar
-	printf("Número de bits\n");
+	printf("Nï¿½mero de bits\n");
 	n_bits=sizeof(numero) * 8;
 	printf("%2d bits",n_bits);	
 	printf("\n");

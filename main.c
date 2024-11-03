@@ -29,6 +29,7 @@ int main() {
     }
 	
 	//AQUI ORDENAS LOS NODOS PAI
+    // XD pai
 	
 	
     //arbolHuffman tree = buildTree( nodos, 6 );
