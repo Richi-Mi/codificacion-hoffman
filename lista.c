@@ -120,3 +120,16 @@ int getByteCode( NodoArbol *h, char letra, Pila *stack ) {
     else 
         return 0;
 }
+int isByteInTheList( NodoLista **p, char byteToRead ) {
+    NodoLista *aux = *p;
+        
+    while( aux != NULL ) {
+        if( aux -> subTree -> caracter == byteToRead ) {
+            aux -> subTree -> frecuencia += 1;
+            return 1;
+        }
+        aux = aux -> next;
+    }
+
+    return 0;
+}

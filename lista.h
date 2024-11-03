@@ -28,3 +28,5 @@ NodoLista* createElement( int frecuencia, char caracter );
 NodoArbol* buildTree( NodoLista **p );
 
 int getByteCode( NodoArbol *h, char letra, Pila *stack );
+
+int isByteInTheList( NodoLista **p, char byteToRead );

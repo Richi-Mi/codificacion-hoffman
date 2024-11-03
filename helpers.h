@@ -1,2 +1,2 @@
-
-elemento* cargarElementos(char *nombreArchivo, int *tamanoArreglo);
+#include "lista.h"
+void cargarElementos( NodoLista **p, char *nombreArchivo, int *tamanoArreglo);
