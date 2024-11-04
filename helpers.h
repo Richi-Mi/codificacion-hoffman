@@ -1,2 +1,3 @@
+#include "lista.h"
 
-elemento* cargarElementos(char *nombreArchivo, int *tamanoArreglo);
+NodoLista* cargarElementos(char *nombreArchivo );

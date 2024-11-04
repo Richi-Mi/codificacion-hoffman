@@ -12,27 +12,21 @@ int main() {
 	printf("Ingresa el nombre del archivo a leer en bits: \n");
 	scanf("%s", nombreArchivo);
 	
-	elemento *arreglo = cargarElementos(nombreArchivo, &tamanoArreglo);
+	NodoLista *p = cargarElementos(nombreArchivo );
 	
-	for(i = 0; i < tamanoArreglo; i++){
-		printf("Elemento %d: caracter = %02X\n Y frecuencia: %d\n", i, arreglo[i].caracter, arreglo[i].frecuencia);
-	}
-	
-	Nodo nodos[tamanoArreglo];
-
-    for( i = 0; i < tamanoArreglo; i++ ) {
-        nodos[i].e.frecuencia = arreglo[i].frecuencia;
-        nodos[i].e.caracter = arreglo[i].caracter;
-
-        nodos[i].left = NULL;
-        nodos[i].right = NULL;
-    }
 	
 	//AQUI ORDENAS LOS NODOS PAI
 	
-	
-    //arbolHuffman tree = buildTree( nodos, 6 );
+	NodoArbol *a = buildTree( &p );
 
+    Pila *myStack = malloc( sizeof(Pila) );
+    myStack -> tope = 0;
+    myStack -> inicio = NULL;
+
+    //arbolHuffman tree = buildTree( nodos, 6 );
+    getByteCode( a, 'e', myStack );
+
+    showElements( myStack );
     // getByteCode( tree, 'l' );
     return 0;
 }

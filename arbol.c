@@ -19,6 +19,7 @@ void addToLeft( arbolHuffman p, elemento E ){
 void addToRight( arbolHuffman p, elemento E ){
     p -> right = init( E );
 }
+/*
 arbolHuffman buildTree( Nodo l[], int n ) {
     int i;
     
@@ -85,4 +86,4 @@ void getByteCode( arbolHuffman tree, byte letra ) {
             getByteCode( tree -> right, letra );
         }
     }
-}
+}*/

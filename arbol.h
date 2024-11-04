@@ -11,7 +11,7 @@ typedef struct elemento
 {
 	int frecuencia;
 	byte caracter;
-	void *apellido;
+	booleano hola;
 } elemento;
 
 typedef struct Nodo {
@@ -35,6 +35,6 @@ void addToLeft( arbolHuffman p, elemento E );
 
 void addToRight( arbolHuffman p, elemento E );
 
-arbolHuffman buildTree( Nodo l[], int n );
+// arbolHuffman buildTree( Nodo l[], int n );
 
-void getByteCode( arbolHuffman tree, byte letra );
+// void getByteCode( arbolHuffman tree, byte letra );
