@@ -3,7 +3,24 @@
 #include "arbol.h"
 #include "helpers.h"
 
-NodoLista* cargarElementos(char *nombreArchivo ) {
+#include <stdio.h>
+
+void createFileTab( const char *nombreArchivo, char *texto ) {
+    FILE *file = fopen(nombreArchivo, "a");
+    if (file == NULL) {
+        printf("Error al abrir el archivo");
+        return;
+    }
+
+    // Escribimos el texto deseado en el archivo
+    fprintf( file, "%s\n", texto );
+
+    // Cerramos el archivo después de escribir
+    fclose(file);
+}
+
+
+NodoLista* cargarElementos( const char *nombreArchivo, const char *nombreTab ) {
 
 	int j, n;
 	size_t tamanioArchivo, i;
@@ -11,7 +28,9 @@ NodoLista* cargarElementos(char *nombreArchivo ) {
 	NodoLista *A;
 	booleano cambios;
 	
-	FILE *archivo = fopen(nombreArchivo, "rb"); //Abrimos el archivo en modo binario
+	FILE *archivo = fopen( nombreArchivo, "rb"); //Abrimos el archivo en modo binario
+	FILE *archivoTab = fopen( nombreTab, "a" );
+
 	if (archivo == NULL) {
         printf("Error al abrir el archivo");
         exit(1);
@@ -64,6 +83,9 @@ NodoLista* cargarElementos(char *nombreArchivo ) {
 
     for( i = 0; i < n; i++ ) {
         NodoLista *h = createElement( A[i].subTree->frecuencia, A[i].subTree->caracter );
+		
+		fprintf( archivoTab, "%s\n", "");
+
         insertOrderedNode( &B, h );
     } 
 	return B;
