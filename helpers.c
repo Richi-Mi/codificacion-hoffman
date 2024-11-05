@@ -84,7 +84,7 @@ NodoLista* cargarElementos( const char *nombreArchivo, const char *nombreTab ) {
     for( i = 0; i < n; i++ ) {
         NodoLista *h = createElement( A[i].subTree->frecuencia, A[i].subTree->caracter );
 		
-		fprintf( archivoTab, "%s\n", "");
+		fprintf( archivoTab, "%c,%d\n", h->subTree->caracter, h->subTree->frecuencia );
 
         insertOrderedNode( &B, h );
     } 

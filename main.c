@@ -7,12 +7,15 @@ int main() {
 	
 	//LECTURA DE ARCHIVOS POR BITS
 	int tamanoArreglo, i;
-	char nombreArchivo[20];
+	char nombreArchivo[20], nombreArchivoTab[20];
 	
 	printf("Ingresa el nombre del archivo a leer en bits: \n");
 	scanf("%s", nombreArchivo);
+
+    printf("Ingresa el nombre del archivo a leer en bits: \n");
+	scanf("%s", nombreArchivoTab);
 	
-	NodoLista *p = cargarElementos(nombreArchivo );
+	NodoLista *p = cargarElementos(nombreArchivo, nombreArchivoTab );
 	
 	
 	//AQUI ORDENAS LOS NODOS PAI

@@ -1,5 +1,3 @@
 #include "lista.h"
 
-NodoLista* cargarElementos( char *nombreArchivo );
-
-void createFileTab( char *nombreArchivo, char *text );
+NodoLista* cargarElementos( const char *nombreArchivo, const char *texto );
