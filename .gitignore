@@ -1,4 +1,5 @@
 main
-a.exe
+*.exe
 api_key.txt
 .vscode/
+*.tab

@@ -11,11 +11,11 @@
 int isEmpty( Pila *myStack ) {
     return myStack -> tope == 0;
 }
-void push( Pila *myStack, char value ) {
-    Nodo *aux = myStack -> inicio;
+void push( Pila *myStack, unsigned char value ) {
+    NodoPila *aux = myStack -> inicio;
 
-    // Creamos el nuevo Nodo.
-    Nodo *nuevo = malloc( sizeof( Nodo ) );
+    // Creamos el nuevo NodoPila.
+    NodoPila *nuevo = malloc( sizeof( NodoPila ) );
     nuevo -> value = value;
 
     if( aux == NULL ) {
@@ -30,7 +30,7 @@ void push( Pila *myStack, char value ) {
 }
 void pop( Pila *myStack ) {
     if( !isEmpty( myStack ) ) {
-        Nodo *aux;
+        NodoPila *aux;
         
         aux = myStack -> inicio;
 
@@ -44,9 +44,9 @@ void pop( Pila *myStack ) {
 }
 void showElements( Pila *myStack ) {
     if( !isEmpty( myStack ) ) {
-        Nodo *aux = myStack -> inicio;
+        NodoPila *aux = myStack -> inicio;
         while ( aux != NULL ) {
-            printf("%c, ", aux -> value );
+            printf("%c", aux -> value );
             aux = aux -> siguiente;
         } 
     }   
@@ -55,9 +55,9 @@ void showElements( Pila *myStack ) {
     }
 }
 void liberarMemoria( Pila *myStack ) {
-    Nodo *inicio = myStack -> inicio;
+    NodoPila *inicio = myStack -> inicio;
     while( inicio != NULL ) {
-        Nodo *aux = inicio;
+        NodoPila *aux = inicio;
         inicio = inicio -> siguiente;
 
         free( aux );

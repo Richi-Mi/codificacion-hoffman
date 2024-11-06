@@ -4,7 +4,8 @@ typedef struct NodoArbol
 {
     
     int frecuencia;
-    char caracter;
+    unsigned char caracter;
+    unsigned char isLetter;
 
     struct NodoArbol *derecha;
     struct NodoArbol *izquierda;
@@ -19,14 +20,14 @@ typedef struct NodoLista {
 
 } NodoLista;
 
-void addElementToEnd( NodoLista **p, int frecuencia, char caracter );
+void addElementToEnd( NodoLista **p, int frecuencia, unsigned char caracter );
 
 void insertOrderedNode( NodoLista **p, NodoLista *h );
 
-NodoLista* createElement( int frecuencia, char caracter );
+NodoLista* createElement( int frecuencia, unsigned char caracter );
 
 NodoArbol* buildTree( NodoLista **p );
 
-int getByteCode( NodoArbol *h, char letra, Pila *stack );
+int getByteCode( NodoArbol *h, unsigned char letra, Pila *stack );
 
-int isByteInTheList( NodoLista **p, char byteToRead );
+int isByteInTheList( NodoLista **p, unsigned char byteToRead );

@@ -1,17 +1,17 @@
 // Implementación de pilas dinamicas
-typedef struct Nodo { 
-    char value;
-    struct Nodo *siguiente;
-} Nodo;
+typedef struct NodoPila { 
+    unsigned char value;
+    struct NodoPila *siguiente;
+} NodoPila;
 
 typedef struct Pila {
-    struct Nodo *inicio;
+    struct NodoPila *inicio;
     int tope;
 } Pila;
 
 int isEmpty( Pila *myStack );
 
-void push( Pila *myStack, char value );
+void push( Pila *myStack, unsigned char value );
 
 void pop( Pila *myStack );
 

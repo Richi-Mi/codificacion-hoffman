@@ -1,2 +1,3 @@
 #include "lista.h"
-void cargarElementos( NodoLista **p, char *nombreArchivo, int *tamanoArreglo);
+
+NodoLista* cargarElementos( const char *nombreArchivo, const char *texto );

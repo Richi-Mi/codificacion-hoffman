@@ -10,7 +10,7 @@ NodoArbol* buildTree( NodoLista **p ) {
     
     while ( (*p) -> next != NULL ) {
         NodoArbol *newTree = malloc( sizeof( NodoArbol ) );
-        newTree -> caracter = ' ';
+        newTree -> isLetter = 0;
         newTree -> frecuencia = ( (*p) -> subTree -> frecuencia ) + ( (*p) -> next -> subTree -> frecuencia );
 
         newTree -> izquierda = (*p) -> subTree;
@@ -33,6 +33,10 @@ NodoArbol* buildTree( NodoLista **p ) {
 
 }
 void insertOrderedNode(NodoLista **p, NodoLista *h) {
+    if( *p == NULL ) {
+        *p = h;
+        return;
+    }
     NodoLista *aux = *p;
     NodoLista *ant = NULL;
 
@@ -55,10 +59,11 @@ void insertOrderedNode(NodoLista **p, NodoLista *h) {
 }
 
 
-NodoLista* createElement( int frecuencia, char caracter ) {
+NodoLista* createElement( int frecuencia, unsigned char caracter ) {
     // Crear el elemento a agregar.
     NodoArbol *na = malloc( sizeof( NodoArbol ) );
     na -> caracter = caracter;
+    na -> isLetter = 1;
     na -> frecuencia = frecuencia;
 
     na -> derecha = NULL;
@@ -71,7 +76,7 @@ NodoLista* createElement( int frecuencia, char caracter ) {
     return nl;
 }
 
-void addElementToEnd( NodoLista **p, int frecuencia, char caracter ) {
+void addElementToEnd( NodoLista **p, int frecuencia, unsigned char caracter ) {
     NodoLista *nl = createElement( frecuencia, caracter );
     // Comprobamos si es el primer elemento.
     if( *p == NULL ) 
@@ -86,7 +91,7 @@ void addElementToEnd( NodoLista **p, int frecuencia, char caracter ) {
     }
 
 }
-int getByteCode( NodoArbol *h, char letra, Pila *stack ) {
+int getByteCode( NodoArbol *h, unsigned char letra, Pila *stack ) {
 
     // Caso Base
     if( h -> izquierda == NULL && h -> derecha == NULL )
@@ -120,7 +125,7 @@ int getByteCode( NodoArbol *h, char letra, Pila *stack ) {
     else 
         return 0;
 }
-int isByteInTheList( NodoLista **p, char byteToRead ) {
+int isByteInTheList( NodoLista **p, unsigned char byteToRead ) {
     NodoLista *aux = *p;
         
     while( aux != NULL ) {

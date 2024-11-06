@@ -1,39 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "arbol.h"
 #include "helpers.h"
 
 int main() {
-    // int  n = 6, i;
-    int frecuencias[] = { 5, 9, 12, 13, 16, 45 };
-    char caracteres[] = { 'f', 'e', 'c', 'b', 'd', 'a'};
+	
+	//LECTURA DE ARCHIVOS POR BITS
+	int tamanoArreglo, i;
+	char nombreArchivo[20], nombreArchivoTab[20];
+	
+	printf("Ingresa el nombre del archivo a leer en bits: \n");
+	scanf("%s", nombreArchivo);
 
-    int *n = 0;
-
-    NodoLista *p = NULL;
-    cargarElementos( &p, "TextoPrueba.txt", n );
-    // Llenar el arreglo,
-    /* for( i = 0; i < n; i++ )
-        addElementToEnd( &p, frecuencias[i], caracteres[i] );
-    */
-    NodoLista *aux = p;
-
-    printf("Lista - pre.\n");
-    while( aux != NULL ) {
-        printf("| %c - %d |\n", aux -> subTree -> caracter, aux -> subTree -> frecuencia );
-        aux = aux -> next;
-    }
-    /*
-    NodoArbol *a = buildTree( &p );
+    printf("Ingresa el nombre del archivo a leer en bits: \n");
+	scanf("%s", nombreArchivoTab);
+	
+	NodoLista *p = cargarElementos(nombreArchivo, nombreArchivoTab );
+	
+	
+	//AQUI ORDENAS LOS NODOS PAI
+	
+	NodoArbol *a = buildTree( &p );
 
     Pila *myStack = malloc( sizeof(Pila) );
     myStack -> tope = 0;
     myStack -> inicio = NULL;
 
-    printf("%d\n",  a -> frecuencia );
+    //arbolHuffman tree = buildTree( nodos, 6 );
+    getByteCode( a, 'e', myStack );
 
-    int b = getByteCode( a, 'b', myStack );
-
-    showElements( myStack ); */
-    
+    showElements( myStack );
+    // getByteCode( tree, 'l' );
+    return 0;
 }
