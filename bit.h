@@ -38,7 +38,7 @@
  * bit de 1 a 0 o de 0 a 1.
 */
 #define CAMBIA( var, bpos ) *(unsigned*)&var ^= PESOBIT(bpos)
-
+/*
 int main(void)
 {
 	int i,n_bits, a; //Auxiliares
@@ -69,7 +69,7 @@ int main(void)
 	//PONE_0(numero,5); 		//0 en Bit 5
 	
 	CAMBIA(numero,0);		//Negar Bit 0
-	//CAMBIA(numero,3);		//Negar Bit 3
+	CAMBIA(numero,3);		//Negar Bit 3
 	//CAMBIA(numero,7);		//Negar Bit 7
 	//CAMBIA(numero,0);		//Negar Bit 0
 
@@ -80,3 +80,4 @@ int main(void)
 	printf("%d",CONSULTARBIT(numero,i));
 	printf("\t%u\n",numero);
 }
+*/

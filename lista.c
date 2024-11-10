@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+//#include "helpers.h"
 
 #include "lista.h"
 
@@ -10,7 +12,7 @@ NodoArbol* buildTree( NodoLista **p ) {
     
     while ( (*p) -> next != NULL ) {
         NodoArbol *newTree = malloc( sizeof( NodoArbol ) );
-        newTree -> isLetter = 0;
+        //newTree -> isLetter = 0;
         newTree -> frecuencia = ( (*p) -> subTree -> frecuencia ) + ( (*p) -> next -> subTree -> frecuencia );
 
         newTree -> izquierda = (*p) -> subTree;
@@ -63,7 +65,7 @@ NodoLista* createElement( int frecuencia, unsigned char caracter ) {
     // Crear el elemento a agregar.
     NodoArbol *na = malloc( sizeof( NodoArbol ) );
     na -> caracter = caracter;
-    na -> isLetter = 1;
+    //na -> isLetter = 1;
     na -> frecuencia = frecuencia;
 
     na -> derecha = NULL;
@@ -91,6 +93,53 @@ void addElementToEnd( NodoLista **p, int frecuencia, unsigned char caracter ) {
     }
 
 }
+
+void agregarCaracter(char** cadena, char caracter) {
+    size_t longitud = strlen(*cadena);
+
+    // Reasignar memoria para la cadena con espacio adicional
+    *cadena = realloc(*cadena, longitud + 2);  // +2 para el nuevo carácter y '\0'
+    if (*cadena == NULL) {
+        fprintf(stderr, "Error al asignar memoria\n");
+        exit(1);
+    }
+
+    // Añadir el nuevo carácter y el terminador de cadena
+    (*cadena)[longitud] = caracter;
+    (*cadena)[longitud + 1] = '\0';
+}
+
+void getByteCode( NodoArbol *h, elemento *dic[256], char** cad){
+	if (h == NULL) {
+        return;
+    }
+	// Caso Base
+    if( h -> izquierda == NULL && h -> derecha == NULL ){ //Significa que es una hoja
+		elemento *e = malloc(sizeof(elemento));
+		e->caracter = h->caracter;
+		e->bytes = strdup(*cad);
+		dic[e->caracter] = e;
+		//printf("%c - %s\n", e->caracter, e->bytes);
+        return;
+	}
+	//Hacemos recursión a la izquierda y a la derecha
+	if(h->izquierda != NULL){
+		agregarCaracter(cad, '0');
+		//printf("%s\n", *cad);
+		getByteCode(h->izquierda, dic, cad);
+		(*cad)[strlen(*cad) - 1] = '\0';
+	}
+		
+	if(h->derecha != NULL){
+		agregarCaracter(cad, '1');
+		//printf("%s\n", *cad);
+		getByteCode(h->derecha, dic, cad);
+		(*cad)[strlen(*cad) - 1] = '\0';
+	}
+}
+
+
+/*
 int getByteCode( NodoArbol *h, unsigned char letra, Pila *stack ) {
 
     // Caso Base
@@ -137,4 +186,4 @@ int isByteInTheList( NodoLista **p, unsigned char byteToRead ) {
     }
 
     return 0;
-}
+}*/
