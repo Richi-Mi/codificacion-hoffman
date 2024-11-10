@@ -166,7 +166,8 @@ void create_file_dat(NodoArbol *arbol, char *nombreArchivo, const char *archivoO
             bitPos++;
         }
     }
-
+	printf("bits en el documento original: %d", bitsTotales);
+	printf("bits escritos en .dat: %d", bitPos);
     // Escribir el buffer en el archivo de salida
     fwrite(buffer, sizeof(byte), (bitPos + 7) / 8, archivoDat);
 
@@ -228,4 +229,35 @@ void descomprimir_archivo(NodoArbol *arbol, char *nombreArchivo, const char *arc
 	}
 	fclose(archivoDat);
 	fclose(archivo);
+}
+
+
+/** showTime
+ * Imprime los tiempos de ejecución del programa.
+ * @author Mendoza Castañeda José Ricardo y Edgardo Adrian Franco.
+ * @param utime0
+ * @param stime0
+ * @param wtime0
+ * @param utime1
+ * @param stime1
+ * @param wtime1
+ */
+void showTime(double utime0, double stime0, double wtime0, double utime1, double stime1, double wtime1)
+{
+  // Cálculo del tiempo de ejecución del programa
+  printf("\n");
+  printf("real (Tiempo total),  %.10f s\n", wtime1 - wtime0);
+  printf("user (Tiempo de procesamiento en CPU), %.10f s\n", utime1 - utime0);
+  printf("sys (Tiempo en acciónes de E/S),  %.10f s\n", stime1 - stime0);
+  printf("CPU/Wall,   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+  printf("\n");
+
+  // Mostrar los tiempos en formato exponecial
+  printf("\n");
+  printf("real (Tiempo total),  %.10e s\n", wtime1 - wtime0);
+  printf("user (Tiempo de procesamiento en CPU), %.10e s\n", utime1 - utime0);
+  printf("sys (Tiempo en acciónes de E/S),  %.10e s\n", stime1 - stime0);
+  printf("CPU/Wall,   %.10f %% \n", 100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+  printf("\n");
+  //******************************************************************
 }
