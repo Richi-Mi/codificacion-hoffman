@@ -87,10 +87,30 @@ NodoLista* cargarElementos( const char *nombreArchivo, const char *nombreTab ) {
     for( i = 0; i < n; i++ ) {
         NodoLista *h = createElement( A[i].subTree->frecuencia, A[i].subTree->caracter );
 		
-		fprintf( archivoTab, "%X,%d\n", h->subTree->caracter, h->subTree->frecuencia );
+		fprintf( archivoTab, "%u,%d\n", h->subTree->caracter, h->subTree->frecuencia );
 
         insertOrderedNode( &B, h );
     } 
+	return B;
+}
+
+NodoLista* obtenerFrecuencias(const char *nomb){
+	int j, i, numero;
+	byte byteLeido;
+	NodoLista *A;
+	char archivo_tab[20];
+	strcpy(archivo_tab, nomb);
+	strcat(archivo_tab, ".tab");
+	FILE *archivo = fopen(archivo_tab, "r");
+	
+	NodoLista *B = NULL;
+	
+	while(fscanf(archivo, "%u,%d\n", &byteLeido, &numero) == 2){
+		NodoLista *h = createElement(numero, byteLeido);
+		insertOrderedNode( &B, h );
+		//printf("%c - %d\n", byteLeido, numero);
+	}
+	fclose(archivo);
 	return B;
 }
 
@@ -129,18 +149,19 @@ void create_file_dat(NodoArbol *arbol, char *nombreArchivo, const char *archivoO
 		res = realloc(res, strlen(res) + strlen(diccionario[byteLeido] -> bytes) + 1);
 		strcat(res, diccionario[byteLeido] -> bytes);
 	}
-	int tam = (int) strlen(res)/8 + 1;
+	int tam = (int) strlen(res)/8 + (strlen(res) % 8 != 0);
 	//Ahora imprimimos en el archivo los bytes
 	//printf("%s\n\n", res);
-	rewind(archivoOri); // Regresa el puntero al inicio
 	byte cero = 0;
 	int aux = 0;
 	//Ya que conocemos el número de bytes, recorremos este mismo y vamos imprimiendo cada byte
 	//según la cadena, previamente hecha
 	while(tam--){
 		for(j = 7; j >= 0; j--, aux++){
-			if(res[aux] == '0') PONE_0(cero, j);
-			else PONE_1(cero, j);
+			if(aux < strlen(res)){
+				if(res[aux] == '0') PONE_0(cero, j);
+				else PONE_1(cero, j);
+			}
 		}
 		
 		fputc(cero, archivoDat);
@@ -148,6 +169,57 @@ void create_file_dat(NodoArbol *arbol, char *nombreArchivo, const char *archivoO
 		cero = 0;
 	}
 	
+	free(res);
+	free(cad);
 	fclose(archivoOri);
 	fclose(archivoDat);
+}
+
+void descomprimir_archivo(NodoArbol *arbol, char *nombreArchivo, const char *archivoDescomprimido){
+	//Abrimos el archivo dat y en escritura el archivo original
+	strcat(nombreArchivo, ".dat");
+	FILE *archivoDat = fopen(nombreArchivo, "rb");
+	FILE *archivo = fopen(archivoDescomprimido, "w");
+	 // Validar apertura de archivos
+    if (archivoDat == NULL || archivo == NULL) {
+        perror("Error al abrir los archivos");
+        return;
+    }
+	//Empezamos a leer bit por bit, y vamos mandando a nuestro arbol, hasta llegar a una hoja e imprimimos la letra
+	//obtenida en ese momento
+	// Mueve el puntero del archivo al final para obtener el tamaño
+    fseek(archivoDat, 0, SEEK_END);
+    size_t tamanioArchivo = ftell(archivoDat); // Obtiene el tamaño del archivo en bytes
+    rewind(archivoDat); // Regresa el puntero al inicio
+	int i, j;
+	byte byteLeido;
+	NodoArbol *raiz = arbol;
+	NodoArbol *nodoActual = arbol;
+	//Obtenemos el número de caracteres que vamos a imprimir
+	int frecuencias = sumaFrecuencia(arbol);
+	//printf("%d\n", frecuencias);
+	//Leemos la cadena, hasta haber impreso todos los caracteres
+	int contadorCaracteres = 0;
+	for (i = 0; i < tamanioArchivo && contadorCaracteres < frecuencias; i++) {
+		fread(&byteLeido, sizeof(byte), 1, archivoDat);
+		
+		for(j = 7; j >= 0 && contadorCaracteres < frecuencias; j--){
+			
+			if(nodoActual -> izquierda == NULL && nodoActual -> derecha == NULL){//Encontramos un caracter
+				fprintf(archivo ,"%c", nodoActual->caracter);
+				nodoActual = raiz;
+				contadorCaracteres++;
+			}
+			int bit = CONSULTARBIT(byteLeido,j);
+			if(bit == 0){//El bit es cero por lo que recorremos en el arbol izquierdo 
+				nodoActual = nodoActual -> izquierda;
+			}else{
+				nodoActual = nodoActual -> derecha;
+			}
+			//printf("%d", CONSULTARBIT(byteLeido, j));
+		}
+		
+	}
+	fclose(archivoDat);
+	fclose(archivo);
 }

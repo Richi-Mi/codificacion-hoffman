@@ -47,3 +47,5 @@ NodoArbol* buildTree( NodoLista **p );
 void getByteCode( NodoArbol *h, elemento *dic[256], char** cad);
 
 int isByteInTheList( NodoLista **p, unsigned char byteToRead );
+
+int sumaFrecuencia( NodoArbol *h);

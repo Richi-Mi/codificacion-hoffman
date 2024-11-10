@@ -138,6 +138,14 @@ void getByteCode( NodoArbol *h, elemento *dic[256], char** cad){
 	}
 }
 
+int sumaFrecuencia( NodoArbol *h){
+	if(h == NULL) return 0;
+	
+	if(h -> izquierda == NULL && h -> derecha == NULL) return h -> frecuencia;
+	
+	return sumaFrecuencia(h->izquierda) + sumaFrecuencia(h->derecha);
+}
+
 
 /*
 int getByteCode( NodoArbol *h, unsigned char letra, Pila *stack ) {
