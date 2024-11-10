@@ -21,7 +21,6 @@ void createFileTab( const char *nombreArchivo, char *texto ) {
 
 
 NodoLista* cargarElementos( const char *nombreArchivo, const char *nombreTab ) {
-
 	int j, n;
 	size_t tamanioArchivo, i;
 	byte byteLeido;
@@ -29,68 +28,76 @@ NodoLista* cargarElementos( const char *nombreArchivo, const char *nombreTab ) {
 	booleano cambios;
 	char aux[20];
 	strcpy(aux, nombreTab);
-	strcat(aux, ".tab");
-	FILE *archivo = fopen( nombreArchivo, "rb"); //Abrimos el archivo en modo binario
+	strcat(aux, ".tab");  // Aseguramos que el nombre incluya la extensión ".tab"
+	FILE *archivo = fopen( nombreArchivo, "rb"); // Abrimos el archivo en modo binario
 	FILE *archivoTab = fopen( aux, "w" );
 
 	if (archivo == NULL) {
-        printf("Error al abrir el archivo");
+        printf("Error al abrir el archivo\n");
         exit(1);
     }
-	
+
+	if (archivoTab == NULL) {
+        printf("Error al abrir el archivo .tab para escribir\n");
+        fclose(archivo);
+        return NULL;
+    }
+
 	// Mueve el puntero del archivo al final para obtener el tamaño
     fseek(archivo, 0, SEEK_END);
     tamanioArchivo = ftell(archivo); // Obtiene el tamaño del archivo en bytes
     rewind(archivo); // Regresa el puntero al inicio
 
-	//En nuestra estructura elemento, ya tenemos el unsigned char como atributo, entonces
+	// Creamos el arreglo de elementos
     A = (NodoLista*)malloc(256 * sizeof(NodoLista));
-	//Arreglo de elementos, en estos vamos a guardar los bytes que ya conocemos y su frecuencia
     if (A == NULL) {
-        printf("Error al asignar memoria para el arreglo de elementos");
+        printf("Error al asignar memoria para el arreglo de elementos\n");
         fclose(archivo);
+        fclose(archivoTab);
         exit(1);
     }
 	
-	n = 0; //Guardamos cuantos bytes llevamos guardados, ya que puede suceder que se repitan o no
-	// Lee cada byte del archivo y guárdalo en el campo `caracter` de cada estructura
+	for(i = 0; i < 256; i++){
+		NodoLista *t = createElement(0, i);
+		A[i] = *t;
+	}
+	
     for (i = 0; i < tamanioArchivo; i++) {
-
         fread(&byteLeido, sizeof(byte), 1, archivo);
-		//Hay que verificar si este byte, ya se encuentra dentro del arreglo, si es así, solo aumentamos su frecuencia
-		//Se puede optimizar usando un mapa o multiset, sin embargo, que flojera implementarlo en C, entonces hacemos 
-		//una búsqueda lineal, viendo si se encuentra el elemento
-		if(n == 0){
+		A[byteLeido].subTree->frecuencia++;
+		/*
+		if (n == 0) {
 			NodoLista *t = createElement( 1, byteLeido );
 			A[0] = *t;
 			n++;
-		}else{
+		} else {
 			cambios = FALSE;
-			for(j = 0; j < n; j++){
-				if(A[j].subTree -> caracter == byteLeido){
+			for (j = 0; j < n; j++) {
+				if (A[j].subTree->caracter == byteLeido) {
 					A[j].subTree->frecuencia++;
 					cambios = TRUE;
 					break;
 				}
 			}
-			if(cambios == FALSE){
+			if (cambios == FALSE) {
 				NodoLista *new = createElement( 1, byteLeido );
 				A[n] = *new;
 				n++;
 			}
-		}
+		}*/
     }
 	fclose(archivo);
 
 	NodoLista *B = NULL;
-
-    for( i = 0; i < n; i++ ) {
-        NodoLista *h = createElement( A[i].subTree->frecuencia, A[i].subTree->caracter );
-		
-		fprintf( archivoTab, "%u,%d\n", h->subTree->caracter, h->subTree->frecuencia );
-
-        insertOrderedNode( &B, h );
-    } 
+    for (i = 0; i < 256; i++) {
+		if(A[i].subTree->frecuencia != 0){
+			NodoLista *h = createElement(A[i].subTree->frecuencia, A[i].subTree->caracter);
+			fprintf(archivoTab, "%u,%d\n", h->subTree->caracter, h->subTree->frecuencia);
+			insertOrderedNode(&B, h);
+		}
+    }
+	
+	fclose(archivoTab);  // Cerramos el archivo .tab después de escribir
 	return B;
 }
 
