@@ -149,7 +149,8 @@ void create_file_dat(NodoArbol *arbol, char *nombreArchivo, const char *archivoO
 		res = realloc(res, strlen(res) + strlen(diccionario[byteLeido] -> bytes) + 1);
 		strcat(res, diccionario[byteLeido] -> bytes);
 	}
-	int tam = (int) strlen(res)/8 + (strlen(res) % 8 != 0);
+	//int tam = (int) strlen(res)/8 + (strlen(res) % 8 != 0);
+	int tam = (int) strlen(res)/8 + 1;
 	//Ahora imprimimos en el archivo los bytes
 	//printf("%s\n\n", res);
 	byte cero = 0;
@@ -179,7 +180,7 @@ void descomprimir_archivo(NodoArbol *arbol, char *nombreArchivo, const char *arc
 	//Abrimos el archivo dat y en escritura el archivo original
 	strcat(nombreArchivo, ".dat");
 	FILE *archivoDat = fopen(nombreArchivo, "rb");
-	FILE *archivo = fopen(archivoDescomprimido, "w");
+	FILE *archivo = fopen(archivoDescomprimido, "wb");
 	 // Validar apertura de archivos
     if (archivoDat == NULL || archivo == NULL) {
         perror("Error al abrir los archivos");
@@ -206,9 +207,11 @@ void descomprimir_archivo(NodoArbol *arbol, char *nombreArchivo, const char *arc
 		for(j = 7; j >= 0 && contadorCaracteres < frecuencias; j--){
 			
 			if(nodoActual -> izquierda == NULL && nodoActual -> derecha == NULL){//Encontramos un caracter
-				fprintf(archivo ,"%c", nodoActual->caracter);
+				//fprintf(archivo ,"%u", nodoActual->caracter);
+				fputc(nodoActual -> caracter, archivo);
 				nodoActual = raiz;
 				contadorCaracteres++;
+				//printf("%d\n", contadorCaracteres);
 			}
 			int bit = CONSULTARBIT(byteLeido,j);
 			if(bit == 0){//El bit es cero por lo que recorremos en el arbol izquierdo 
