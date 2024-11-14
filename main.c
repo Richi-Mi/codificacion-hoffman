@@ -4,6 +4,17 @@
 #include "helpers.h"
 #include "tiempo.h"
 /*
+Autores:
+-Barcenas Pineda Luca Alexander 
+-Mendoza Castañeda José Ricardo 
+-Peredo Borgonio Daniel 
+-Rodriguez Mendoza Christopher
+pruebas hechas en:
+-ubuntu 22.04
+copilación:
+gcc main.c helpers.c lista.c bit.h -o main
+*/
+/*
 descripcion:
 Este programa implementa la codificación y decodificación de archivos utilizando el algoritmo de Huffman.
 Permite al usuario comprimir y descomprimir archivos binarios a través de dos opciones:
