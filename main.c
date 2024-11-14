@@ -3,7 +3,14 @@
 //#include "arbol.h"
 #include "helpers.h"
 #include "tiempo.h"
-
+/*
+descripcion:
+Este programa implementa la codificación y decodificación de archivos utilizando el algoritmo de Huffman.
+Permite al usuario comprimir y descomprimir archivos binarios a través de dos opciones:
+1. Comprimir un archivo: Se carga el archivo, se construye el árbol de Huffman y se guarda el archivo comprimido en formato .dat.
+2. Descomprimir un archivo: Se lee un archivo comprimido, se construye el árbol de Huffman y se obtiene el archivo original.
+El programa mide el tiempo de ejecución de cada operación y lo muestra al final.
+*/
 int main() {
 	double utime0, stime0, wtime0, utime1, stime1, wtime1; // Variables para medicion de tiempos
 	
