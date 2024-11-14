@@ -5,6 +5,32 @@
 #include "helpers.h"
 #include "bit.h"
 
+
+/*
+  cargarElementos(const char *nombreArchivo, const char *nombreTab)
+  
+  Carga la frecuencia de cada byte presente en un archivo y las guarda en una lista de nodos ordenada.
+
+  Descripción:
+      La función abre un archivo binario especificado por 'nombreArchivo' y cuenta la frecuencia
+      de cada byte (carácter) en el archivo. Luego, escribe esta información en un archivo de texto
+      con nombre 'nombreTab' (al que se le añade la extensión ".tab"). Finalmente, crea una lista
+      de nodos ordenada de caracteres según su frecuencia y la retorna.
+  
+  Entrada:
+      - 'nombreArchivo': cadena de caracteres que representa el nombre del archivo binario a leer.
+      - 'nombreTab': cadena de caracteres base para el nombre del archivo de salida, al cual se le
+        agrega la extensión ".tab".
+  
+  Salida:
+      - Retorna un puntero a la cabeza de una lista de nodos ('NodoLista') ordenada por frecuencia de caracteres.
+
+  Precondiciones:
+      - 'nombreArchivo' debe ser un archivo binario accesible en modo lectura.
+      - 'nombreTab' debe ser una cadena de caracteres válida para nombrar el archivo de salida.
+      - La función 'createElement' debe inicializar correctamente los nodos de la lista.
+      - La función 'insertOrderedNode' debe manejar la inserción ordenada de nodos en la lista.
+*/
 NodoLista* cargarElementos( const char *nombreArchivo, const char *nombreTab ) {
 	int j, n;
 	size_t tamanioArchivo, i;
@@ -86,6 +112,31 @@ NodoLista* cargarElementos( const char *nombreArchivo, const char *nombreTab ) {
 	return B;
 }
 
+/*
+  obtenerFrecuencias(const char *nomb)
+  
+  Lee las frecuencias de caracteres desde un archivo de texto y las almacena en una lista de nodos ordenada.
+
+  Descripción:
+      La función abre un archivo de texto cuyo nombre se deriva de 'nomb' con la extensión ".tab".
+      Lee cada línea en el archivo, que contiene pares de valores (carácter y frecuencia), crea un
+      nodo con cada par de valores y lo inserta en una lista ordenada de nodos. Finalmente, retorna
+      la lista de nodos ordenada por frecuencia.
+
+  Entrada:
+      - 'nomb': cadena de caracteres base para el nombre del archivo de texto, al que se le agrega
+        la extensión ".tab".
+
+  Salida:
+      - Retorna un puntero a la cabeza de una lista de nodos ('NodoLista') que contiene los caracteres
+        y sus frecuencias, ordenados de forma ascendente por frecuencia.
+
+  Precondiciones:
+      - 'nomb' debe ser una cadena válida que permita acceder al archivo de texto correspondiente.
+      - El archivo ".tab" debe existir y contener líneas con el formato "carácter,frecuencia".
+      - Las funciones 'createElement' e 'insertOrderedNode' deben estar implementadas correctamente
+        para crear e insertar nodos en la lista ordenada.
+*/
 NodoLista* obtenerFrecuencias(const char *nomb){
 	int j, i, numero;
 	byte byteLeido;
@@ -105,6 +156,33 @@ NodoLista* obtenerFrecuencias(const char *nomb){
 	fclose(archivo);
 	return B;
 }
+
+/*
+  create_file_dat(NodoArbol *arbol, char *nombreArchivo, const char *archivoOrigen)
+  
+  Crea un archivo comprimido en formato ".dat" usando la codificación de Huffman basada en un árbol dado.
+
+  Descripción:
+      Esta función toma un árbol de Huffman (arbol) y utiliza un diccionario para obtener la codificación
+      de cada byte en el archivo de entrada (archivoOrigen). Lee el archivo original byte por byte,
+      convierte cada byte a su código binario de Huffman, y almacena los bits codificados en un buffer.
+      Luego, escribe el contenido del buffer en el archivo comprimido de salida (nombreArchivo con extensión ".dat").
+
+  Entrada:
+      - 'arbol': puntero al nodo raíz del árbol de Huffman que contiene la codificación de los bytes.
+      - 'nombreArchivo': nombre del archivo de salida que se creará, al cual se le agrega la extensión ".dat".
+      - 'archivoOrigen': nombre del archivo de entrada que se va a comprimir.
+
+  Salida:
+      - Crea un archivo comprimido con la codificación de Huffman en el formato ".dat".
+
+  Precondiciones:
+      - 'arbol' debe ser un árbol de Huffman válido.
+      - 'nombreArchivo' debe ser una cadena válida para crear un archivo de salida.
+      - 'archivoOrigen' debe existir y ser accesible en modo lectura.
+      - Las funciones 'getByteCode' y las macros 'PONE_1' y 'PONE_0' deben estar implementadas
+        correctamente para asignar los bits en el buffer de salida.
+*/
 
 void create_file_dat(NodoArbol *arbol, char *nombreArchivo, const char *archivoOrigen) {
     // Abrimos el archivo
@@ -163,8 +241,33 @@ void create_file_dat(NodoArbol *arbol, char *nombreArchivo, const char *archivoO
     fclose(archivoDat);
 }
 
+/*
+  descomprimir_archivo(NodoArbol *arbol, char *nombreArchivo, const char *archivoDescomprimido)
 
+  Descomprime un archivo codificado mediante Huffman y lo guarda en su formato original.
 
+  Descripción:
+      Esta función abre un archivo comprimido (.dat) y lo descomprime utilizando el árbol de Huffman proporcionado
+      (arbol). Lee cada byte del archivo comprimido bit a bit, recorriendo el árbol de Huffman para reconstruir los
+      caracteres originales. Cuando encuentra una hoja en el árbol (representando un carácter), escribe ese carácter 
+      en el archivo de salida (archivoDescomprimido). El proceso se repite hasta que se han descomprimido todos los
+      caracteres originales.
+
+  Entrada:
+      - 'arbol': puntero al nodo raíz del árbol de Huffman utilizado para la compresión.
+      - 'nombreArchivo': nombre del archivo comprimido (sin la extensión ".dat").
+      - 'archivoDescomprimido': nombre del archivo en el que se guardará la salida descomprimida.
+
+  Salida:
+      - Archivo descomprimido que contiene los datos originales antes de la compresión.
+
+  Precondiciones:
+      - 'arbol' debe ser un árbol de Huffman válido.
+      - 'nombreArchivo' debe ser el nombre de un archivo comprimido existente sin la extensión ".dat".
+      - 'archivoDescomprimido' debe ser una cadena válida para crear el archivo de salida.
+      - Las funciones 'sumaFrecuencia' y las macros 'CONSULTARBIT' deben estar correctamente implementadas.
+      - Los archivos deben abrirse sin errores.
+*/
 void descomprimir_archivo(NodoArbol *arbol, char *nombreArchivo, const char *archivoDescomprimido){
 	//Abrimos el archivo dat y en escritura el archivo original
 	strcat(nombreArchivo, ".dat");
