@@ -1,4 +1,3 @@
-#include "stack.h"
 
 //DEFINICIÓN DE CONSTANTES
 #define TRUE 1

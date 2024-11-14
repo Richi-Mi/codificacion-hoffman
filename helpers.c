@@ -5,21 +5,6 @@
 #include "helpers.h"
 #include "bit.h"
 
-void createFileTab( const char *nombreArchivo, char *texto ) {
-    FILE *file = fopen(nombreArchivo, "a");
-    if (file == NULL) {
-        printf("Error al abrir el archivo");
-        return;
-    }
-
-    // Escribimos el texto deseado en el archivo
-    fprintf( file, "%s\n", texto );
-
-    // Cerramos el archivo después de escribir
-    fclose(file);
-}
-
-
 NodoLista* cargarElementos( const char *nombreArchivo, const char *nombreTab ) {
 	int j, n;
 	size_t tamanioArchivo, i;
